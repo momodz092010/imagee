@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webhook Client Discord</title>
+    <title>Webhook Client Discord </title>
     <style>
         * {
             margin: 0;
@@ -14,8 +14,8 @@
         }
 
         html, body {
-            width: 100%;
-            height: 100%;
+            width: 120%;
+            height: 120%;
             text-align: center;
             direction: rtl;
             background: url('https://i.pinimg.com/originals/35/58/0d/35580d64b9b883fd0e0678595fc2aefd.gif') no-repeat center center fixed;
@@ -84,17 +84,17 @@
         }
 
         .delete-btn {
-            background-color: black ;
+            background-color: green ;
             color: white;
         }
 
         .send-btn {
-            background-color: blue;
+            background-color: green ;
             color: white;
         }
 
         .mention-btn {
-            background-color: blue;
+            background-color: green ;
             color: black;
         }
 
@@ -108,8 +108,8 @@
 
         .upload-label {
             display: block;
-            width: 100%;
-            padding: 12px;
+            width: 90%;
+            padding: 10px;
             border: 2px dashed rgba(255, 255, 255, 0.5);
             text-align: center;
             cursor: pointer;
@@ -128,7 +128,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>إدارة ويبهوك Discord</h1>
+        <h1>Webhook Client Discord</h1>
         <input type="text" id="webhook-url" placeholder="Webhook">
         <input type="text" id="username" placeholder="Username">
         <input type="text" id="avatar-url" placeholder="Avatar">
@@ -147,7 +147,7 @@
         <input type="file" id="file-upload" accept="image/*,video/*,audio/*,application/pdf">
         <p id="file-name">No file seleced yet </p>
 
-        <button class="send-btn" onclick="sendMessage()">Sent a message/button>
+        <button class="send-btn" onclick="sendMessage()">Sent a message </button>
         <button class="mention-btn" onclick="mentionEveryone()">Notify All mebers </button>
         <button class="delete-btn" onclick="deleteWebhook()">Delete the Webhook </button>
 
