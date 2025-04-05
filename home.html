@@ -1,115 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Open Source Webhook Project</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        color: white;
-        background-image: url('https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        height: 100vh;
-    }
-    h1, h2 {
-        color: #fff;
-        background-color: black;
-        padding: 10px;
-    }
-    p {
-        font-size: 21px;
-        color: #ddd;
-        background-color: black;
-        padding: 10px;
-    }
-    .button, .transparent-button {
-        padding: 15px 30px;
-        font-size: 16px;
-        background-color: transparent;
-        color: white;
-        border: 2px solid white;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-        margin: 10px;
-    }
-    .button:hover, .transparent-button:hover {
-        background-color: #45a049;
-    }
-    .hidden {
-        display: none;
-    }
-    form {
-        margin: 50px;
-        background-color: rgba(0,0,0,0.7);
-        padding: 20px;
-        border-radius: 10px;
-        max-width: 300px;
-    }
-    input {
-        width: 90%;
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 5px;
-        border: none;
-    }
-    button {
-        width: 100%;
-        padding: 10px;
-        background-color: #45a049;
-        border: none;
-        color: white;
-        font-size: 16px;
-        border-radius: 5px;
-    }
-  </style>
-</head>
-<body>
+<!-- KeyAuth SDK -->
+<script src="https://cdn.jsdelivr.net/gh/KeyAuth/keyauth-js/KeyAuth.js"></script>
+<script>
+  // Initialize KeyAuth
+  const KeyAuthApp = new KeyAuth(
+    "web", // App name
+    "SyACwI1a7Q", // Owner ID
+    "427d2e22f683cf216c95b66be60b5f045028b92a084590ac59a5e2622432fc73", // App secret
+    "1.0" // App version
+  );
 
-  <!-- LOGIN FORM -->
-  <div id="loginSection">
-    <h2>Login</h2>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="password" id="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-  </div>
+  KeyAuthApp.init();
 
-  <!-- HOME SECTION (hidden by default) -->
-  <div id="homeSection" class="hidden">
-    <h1>This is a website that helps you start your first coding experience!</h1>
-    <p>WARNING !!! This is a private source code. To use it, please mention our website.</p>
+  const loginForm = document.getElementById('loginForm');
+  const loginSection = document.getElementById('loginSection');
+  const homeSection = document.getElementById('homeSection');
 
-    <a href="https://imagee-pied.vercel.app/api/imagee.html" class="button">Try Project</a>
-    <a href="https://youtube.com" class="transparent-button">Download Project</a>
-  </div>
+  loginForm.addEventListener('submit', async function(event) {
+    event.preventDefault();
 
-  <script>
-    const loginForm = document.getElementById('loginForm');
-    const loginSection = document.getElementById('loginSection');
-    const homeSection = document.getElementById('homeSection');
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-    loginForm.addEventListener('submit', function(event) {
-      event.preventDefault();
+    // Attempt to login with KeyAuth
+    const success = await KeyAuthApp.login(username, password);
 
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      // Basic login logic (you can replace this with real auth / KeyAuth logic)
-      if (username === "admin" && password === "1234") {
-        loginSection.classList.add('hidden');
-        homeSection.classList.remove('hidden');
-      } else {
-        alert("Incorrect username or password!");
-      }
-    });
-  </script>
-
-</body>
-</html>
+    if (success) {
+      alert("Login successful!");
+      loginSection.classList.add('hidden');
+      homeSection.classList.remove('hidden');
+    } else {
+      alert("Login failed: " + KeyAuthApp.response.message);
+    }
+  });
+</script>
