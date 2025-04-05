@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title> Downloading Speed Calc By : +M0 </title>
+  <title>Downloading Speed Calc By: +M0</title>
+
+  <!-- Custom cursor from rw-designer -->
+  <style type="text/css">
+    body {
+      cursor: url(http://www.rw-designer.com/cursor-extern.php?id=84485), auto;
+    }
+  </style>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -24,14 +32,14 @@
     .speedtest-link {
       position: absolute;
       top: 15px;
-      right: 15px;
+      right: 10px;
       color: cyan;
       font-size: 14px;
       text-decoration: none;
     }
 
     .speedtest-link:hover {
-      color: blue ;
+      color: blue;
       text-decoration: underline;
     }
 
@@ -39,16 +47,16 @@
       position: absolute;
       top: 40px;
       right: 15px;
-      color: #8a3030 ;
+      color: #8a3030;
       font-size: 14px;
-      text-decoration: non;
+      text-decoration: none;
     }
 
-    .insta:hover { 
-      color: orange ;
+    .insta:hover {
+      color: orange;
       text-decoration: underline;
     }
-    
+
     .container {
       margin: 20px auto;
       padding: 20px;
@@ -76,13 +84,13 @@
 
     .note {
       font-size: 12px;
-      color: black;
+      color: #888;
       margin-top: 20px;
     }
 
     .note-right {
       position: absolute;
-      right: 30px;
+      right: 10px;
       top: 180px;
       font-size: 14px;
       color: #444;
@@ -92,20 +100,24 @@
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-
   </style>
 </head>
 <body>
+
+  <!-- Custom Cursor Link -->
+  <a href="http://www.rw-designer.com/cursor-detail/84485" title="Get free cursors for your web.">
+    harry-potter-wand.cur Cursor
+  </a>
 
   <!-- Links Section -->
   <a class="speedtest-link" href="https://www.speedtest.net/" target="_blank">Test my internet speed</a>
   <a class="insta" href="https://www.instagram.com/iithemo" target="_blank">Contact me on Instagram</a>
 
-  <div class="banner"> Downloading Speed Calc By : +M0 </div>
+  <div class="banner">Downloading Speed Calc By: +M0</div>
 
   <div class="container">
     <h2>Download time calculator</h2>
-    <p>This Website Help You Know How long will Your File Take To Download ! </p>
+    <p>This Website Help You Know How long will Your File Take To Download?</p>
 
     <div>
       <label for="speed">Download Speed:</label>
@@ -129,51 +141,51 @@
 
     <div id="output" class="result"></div>
     <div class="note">* This is just a simulation of how much time it would take</div>
-    <div  id="algeia-note"  class="note" style="display: none;"> Note: We know that Algeria has a fast internet speed (; 
-
+    <div id="algeria-note" class="note" style="display: none;">
+      Note: We know that Algeria has a fast internet speed (;
+    </div>
   </div>
-  
-  <!-- Note on the right side -->
-  <div class="note-right">Note: MBps ≠ Mbps . 1MBps ≅ 8Mbps</div>
+
+  <!-- Right Side Note -->
+  <div class="note-right">Note: MBps ≠ Mbps + 1MBps ≅ 8Mbps</div>
 
   <script>
-   function calculate() {
-  let speed = parseFloat(document.getElementById("speed").value);
-  let speedUnit = document.getElementById("speedUnit").value;
-  let size = parseFloat(document.getElementById("size").value);
-  let sizeUnit = document.getElementById("sizeUnit").value;
+    function calculate() {
+      let speed = parseFloat(document.getElementById("speed").value);
+      let speedUnit = document.getElementById("speedUnit").value;
+      let size = parseFloat(document.getElementById("size").value);
+      let sizeUnit = document.getElementById("sizeUnit").value;
 
-  if (isNaN(speed) || speed <= 0 || isNaN(size) || size <= 0) {
-    document.getElementById("output").innerText = "Please enter valid numbers greater than 0.";
-    return;
-  }
+      if (isNaN(speed) || speed <= 0 || isNaN(size) || size <= 0) {
+        document.getElementById("output").innerText = "Please enter valid numbers greater than 0.";
+        return;
+      }
 
-  // Convert file size to megabytes
-  let sizeInMB = sizeUnit === "GB" ? size * 1024 : size;
+      // Convert file size to megabytes
+      let sizeInMB = sizeUnit === "GB" ? size * 1024 : size;
 
-  // Convert speed to megabytes per second
-  let speedInMBps = speedUnit === "Mbps" ? (speed / 8) : speed;
+      // Convert speed to megabytes per second
+      let speedInMBps = speedUnit === "Mbps" ? (speed / 8) : speed;
 
-  // Calculate download time in seconds
-  let timeInSeconds = sizeInMB / speedInMBps;
+      // Calculate download time in seconds
+      let timeInSeconds = sizeInMB / speedInMBps;
 
-  let hours = Math.floor(timeInSeconds / 3600);
-  let minutes = Math.floor((timeInSeconds % 3600) / 60);
-  let seconds = Math.round(timeInSeconds % 60);
+      let hours = Math.floor(timeInSeconds / 3600);
+      let minutes = Math.floor((timeInSeconds % 3600) / 60);
+      let seconds = Math.round(timeInSeconds % 60);
 
-  // Show the results
-  let resultText = `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
-  
-  if (hours > 0) {
-    resultText = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
-  }
+      // Show the results
+      let resultText = `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
+      
+      if (hours > 0) {
+        resultText = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
+      }
 
-  document.getElementById("output").innerText =
-    `It will take ${resultText} to transfer ${size} ${sizeUnit} at ${speedInMBps.toFixed(2)} MB/sec`;
+      document.getElementById("output").innerText =
+        `It will take ${resultText} to transfer ${size} ${sizeUnit} at ${speedInMBps.toFixed(2)} MB/sec`;
 
-  document.getElementById("algeria-note").style.display = "block";
-}
-
+      document.getElementById("algeria-note").style.display = "block";
+    }
   </script>
 
 </body>
