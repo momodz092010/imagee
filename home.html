@@ -5,15 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Downloading Speed Calc By: +M0</title>
 
-  <!-- Custom cursor from rw-designer -->
-  <style type="text/css">
-    body {
-      cursor: url(http://www.rw-designer.com/cursor-extern.php?id=84485), auto;
-    }
-  </style>
 
   <style>
     body {
+      cursor: url(http://www.rw-designer.com/cursor-extern.php?id=84485), auto;
       font-family: Arial, sans-serif;
       background: #f0f0f0;
       padding: 0;
@@ -104,10 +99,7 @@
 </head>
 <body>
 
-  <!-- Custom Cursor Link -->
-  <a href="http://www.rw-designer.com/cursor-detail/84485" title="Get free cursors for your web.">
-    harry-potter-wand.cur Cursor
-  </a>
+
 
   <!-- Links Section -->
   <a class="speedtest-link" href="https://www.speedtest.net/" target="_blank">Test my internet speed</a>
@@ -146,7 +138,7 @@
     </div>
   </div>
 
-  <!-- Right Side Note -->
+  <!-- Note on the right side -->
   <div class="note-right">Note: MBps ≠ Mbps + 1MBps ≅ 8Mbps</div>
 
   <script>
@@ -174,9 +166,8 @@
       let minutes = Math.floor((timeInSeconds % 3600) / 60);
       let seconds = Math.round(timeInSeconds % 60);
 
-      // Show the results
+      // Build result string
       let resultText = `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
-      
       if (hours > 0) {
         resultText = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
       }
