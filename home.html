@@ -89,7 +89,7 @@
 
   <div class="container">
     <h2>Download time calculator</h2>
-    <p>How long will it take to download this?</p>
+    <p>This Website Help You Know How long will Your File Take To Download ?</p>
 
     <div>
       <label for="speed">Download Speed:</label>
@@ -111,10 +111,9 @@
 
     <button onclick="calculate()">Calculate</button>
 
-    <div id="output" class="result" + Note: We know that Algeria has a fast internet speed ></div>
+    <div id="output" class="result" + class="note" style="display: none;"> Note: We know that Algeria has a fast internet speed  ></div>
     <div class="note">* This is just a simulation of how much time it would take</div>
-    <div id="note-algeria" class="note" style="display: none;"> Note: We know that Algeria has a fast internet speed (; </div>
-  </div>
+    
 
   <script>
     function calculate() {
@@ -144,11 +143,7 @@
       document.getElementById("output").innerText =
         `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}\n` +
         `to transfer ${size} ${sizeUnit} at ${speedInMBps.toFixed(2)} MB/sec`;
-
-      // Show the Algeria note after results
-      document.getElementById("note-algeria").style.display = "block";
-    }
-  </script>
+      
 
 </body>
 </html>
