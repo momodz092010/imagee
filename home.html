@@ -6,66 +6,88 @@
   <title>Open Source Webhook Project</title>
   <style>
     body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        color: white;
-        background-image: url('https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        height: 100vh;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: white;
+      background-image: url('https://upload.wikimedia.org/wikipedia/en/2/27/Bliss_%28Windows_XP%29.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    h1, h2 {
-        color: #fff;
-        background-color: black;
-        padding: 10px;
+
+    #loginSection, #homeSection {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-    p {
-        font-size: 21px;
-        color: #ddd;
-        background-color: black;
-        padding: 10px;
-    }
-    .button, .transparent-button {
-        padding: 15px 30px;
-        font-size: 16px;
-        background-color: transparent;
-        color: white;
-        border: 2px solid white;
-        border-radius: 5px;
-        cursor: pointer;
-        text-decoration: none;
-        margin: 10px;
-    }
-    .button:hover, .transparent-button:hover {
-        background-color: #45a049;
-    }
+
     .hidden {
-        display: none;
+      display: none;
     }
+
     form {
-        margin: 50px;
-        background-color: rgba(0,0,0,0.7);
-        padding: 20px;
-        border-radius: 10px;
-        max-width: 300px;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 350px;
+      width: 90%;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     }
+
+    h2 {
+      margin-bottom: 20px;
+      color: white;
+    }
+
     input {
-        width: 90%;
-        padding: 10px;
-        margin: 10px 0;
-        border-radius: 5px;
-        border: none;
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
     }
+
     button {
-        width: 100%;
-        padding: 10px;
-        background-color: #45a049;
-        border: none;
-        color: white;
-        font-size: 16px;
-        border-radius: 5px;
+      width: 100%;
+      padding: 12px;
+      background-color: #45a049;
+      border: none;
+      color: white;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    h1, p {
+      background-color: black;
+      padding: 10px;
+      max-width: 800px;
+      margin: 10px;
+    }
+
+    .button, .transparent-button {
+      padding: 15px 30px;
+      font-size: 16px;
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      margin: 10px;
+    }
+
+    .button:hover, .transparent-button:hover {
+      background-color: #45a049;
     }
   </style>
 </head>
@@ -81,51 +103,49 @@
     </form>
   </div>
 
-  <!-- HOME SECTION (hidden by default) -->
+  <!-- HOME SECTION -->
   <div id="homeSection" class="hidden">
     <h1>This is a website that helps you start your first coding experience!</h1>
     <p>WARNING !!! This is a private source code. To use it, please mention our website.</p>
-
     <a href="https://imagee-pied.vercel.app/api/imagee.html" class="button">Try Project</a>
     <a href="https://youtube.com" class="transparent-button">Download Project</a>
   </div>
 
+  <!-- ✅ KeyAuth Script -->
   <script src="https://cdn.jsdelivr.net/gh/KeyAuth/keyauth-js/KeyAuth.js"></script>
-<script>
-  // Initialize KeyAuth
-  const KeyAuthApp = new KeyAuth(
-    "web", // App name
-    "SyACwI1a7Q", // Owner ID
-    "427d2e22f683cf216c95b66be60b5f045028b92a084590ac59a5e2622432fc73", // App secret
-    "1.0" // App version
-  );
+  <script>
+    // Initialize KeyAuth
+    const KeyAuthApp = new KeyAuth(
+      "web", // App name
+      "SyACwI1a7Q", // Owner ID
+      "427d2e22f683cf216c95b66be60b5f045028b92a084590ac59a5e2622432fc73", // App secret
+      "1.0" // App version
+    );
 
-  KeyAuthApp.init();
+    KeyAuthApp.init();
 
-  const loginForm = document.getElementById('loginForm');
-  const loginSection = document.getElementById('loginSection');
-  const homeSection = document.getElementById('homeSection');
+    const loginForm = document.getElementById('loginForm');
+    const loginSection = document.getElementById('loginSection');
+    const homeSection = document.getElementById('homeSection');
 
-  loginForm.addEventListener('submit', async function(event) {
-    event.preventDefault();
+    loginForm.addEventListener('submit', async function(event) {
+      event.preventDefault();
 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
-    // Attempt to login with KeyAuth
-    const success = await KeyAuthApp.login(username, password);
+      // Attempt to login with KeyAuth
+      const success = await KeyAuthApp.login(username, password);
 
-    if (success) {
-      alert("Login successful!");
-      loginSection.classList.add('hidden');
-      homeSection.classList.remove('hidden');
-    } else {
-      alert("Login failed: " + KeyAuthApp.response.message);
-    }
-  });
-</script>
+      if (success) {
+        alert("Login successful!");
+        loginSection.classList.add('hidden');
+        homeSection.classList.remove('hidden');
+      } else {
+        alert("Login failed: " + KeyAuthApp.response.message);
+      }
+    });
+  </script>
 
 </body>
 </html>
-
-
