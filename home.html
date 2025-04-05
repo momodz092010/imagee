@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Downloading Speed Calc By: +M0</title>
-
-
+  <title> Downloading Speed Calc By : +M0 </title>
   <style>
     body {
-      cursor: url(http://www.rw-designer.com/cursor-extern.php?id=84485), auto;
       font-family: Arial, sans-serif;
       background: #f0f0f0;
       padding: 0;
@@ -27,7 +24,7 @@
     .speedtest-link {
       position: absolute;
       top: 15px;
-      right: 10px;
+      right: 15px;
       color: cyan;
       font-size: 14px;
       text-decoration: none;
@@ -79,13 +76,13 @@
 
     .note {
       font-size: 12px;
-      color: #888;
+      color: black;
       margin-top: 20px;
     }
 
     .note-right {
       position: absolute;
-      right: 10px;
+      right: 30px;
       top: 180px;
       font-size: 14px;
       color: #444;
@@ -95,21 +92,40 @@
       border-radius: 5px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+
+    /* Magic Trail Dot Style */
+    .trail-dot {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, cyan, transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.8;
+      animation: fadeOut 0.6s ease-out forwards;
+      box-shadow: 0 0 10px cyan, 0 0 20px cyan;
+    }
+
+    @keyframes fadeOut {
+      to {
+        opacity: 0;
+        transform: scale(2);
+      }
+    }
   </style>
 </head>
 <body>
-
-
 
   <!-- Links Section -->
   <a class="speedtest-link" href="https://www.speedtest.net/" target="_blank">Test my internet speed</a>
   <a class="insta" href="https://www.instagram.com/iithemo" target="_blank">Contact me on Instagram</a>
 
-  <div class="banner">Downloading Speed Calc By: +M0</div>
+  <div class="banner"> Downloading Speed Calc By : +M0 </div>
 
   <div class="container">
     <h2>Download time calculator</h2>
-    <p>This Website Help You Know How long will Your File Take To Download?</p>
+    <p>This Website Help You Know How long will Your File Take To Download ! </p>
 
     <div>
       <label for="speed">Download Speed:</label>
@@ -139,7 +155,7 @@
   </div>
 
   <!-- Note on the right side -->
-  <div class="note-right">Note: MBps ≠ Mbps + 1MBps ≅ 8Mbps</div>
+  <div class="note-right">Note: MBps ≠ Mbps . 1MBps ≅ 8Mbps</div>
 
   <script>
     function calculate() {
@@ -153,20 +169,14 @@
         return;
       }
 
-      // Convert file size to megabytes
       let sizeInMB = sizeUnit === "GB" ? size * 1024 : size;
-
-      // Convert speed to megabytes per second
       let speedInMBps = speedUnit === "Mbps" ? (speed / 8) : speed;
-
-      // Calculate download time in seconds
       let timeInSeconds = sizeInMB / speedInMBps;
 
       let hours = Math.floor(timeInSeconds / 3600);
       let minutes = Math.floor((timeInSeconds % 3600) / 60);
       let seconds = Math.round(timeInSeconds % 60);
 
-      // Build result string
       let resultText = `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
       if (hours > 0) {
         resultText = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
@@ -177,6 +187,16 @@
 
       document.getElementById("algeria-note").style.display = "block";
     }
+
+    // Magic Trail Effect
+    document.addEventListener("mousemove", function(e) {
+      const dot = document.createElement("div");
+      dot.className = "trail-dot";
+      dot.style.left = e.pageX + "px";
+      dot.style.top = e.pageY + "px";
+      document.body.appendChild(dot);
+      setTimeout(() => dot.remove(), 600);
+    });
   </script>
 
 </body>
