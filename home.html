@@ -21,6 +21,19 @@
       font-weight: bold;
     }
 
+    .speedtest-link {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: cyan;
+      font-size: 14px;
+      text-decoration: none;
+    }
+
+    .speedtest-link:hover {
+      text-decoration: underline;
+    }
+
     .container {
       margin: 20px auto;
       padding: 20px;
@@ -54,6 +67,8 @@
   </style>
 </head>
 <body>
+
+  <a class="speedtest-link" href="https://www.speedtest.net/" target="_blank">Test my internet speed</a>
 
   <div class="banner">multitool &gt; downloading speed</div>
 
@@ -106,9 +121,4 @@
 
       document.getElementById("output").innerText =
         `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''} \n` +
-        `to transfer ${size} ${sizeUnit} at ${speedInMBps.toFixed(2)} MB/sec`;
-    }
-  </script>
-
-</body>
-</html>
+        `to transfer ${s
