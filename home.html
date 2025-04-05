@@ -116,36 +116,43 @@
     <div  id="algeia-note"  class="note" style="display: none;"> Note: We know that Algeria has a fast internet speed (; 
 
   <script>
-    function calculate() {
-      let speed = parseFloat(document.getElementById("speed").value);
-      let speedUnit = document.getElementById("speedUnit").value;
-      let size = parseFloat(document.getElementById("size").value);
-      let sizeUnit = document.getElementById("sizeUnit").value;
+   function calculate() {
+  let speed = parseFloat(document.getElementById("speed").value);
+  let speedUnit = document.getElementById("speedUnit").value;
+  let size = parseFloat(document.getElementById("size").value);
+  let sizeUnit = document.getElementById("sizeUnit").value;
 
-      if (isNaN(speed) || speed <= 0 || isNaN(size) || size <= 0) {
-        document.getElementById("output").innerText = "Please enter valid numbers greater than 0.";
-        return;
-      }
+  if (isNaN(speed) || speed <= 0 || isNaN(size) || size <= 0) {
+    document.getElementById("output").innerText = "Please enter valid numbers greater than 0.";
+    return;
+  }
 
-      // Convert file size to megabytes
-      let sizeInMB = sizeUnit === "GB" ? size * 1024 : size;
+  // Convert file size to megabytes
+  let sizeInMB = sizeUnit === "GB" ? size * 1024 : size;
 
-      // Convert speed to megabytes per second
-      let speedInMBps = speedUnit === "Mbps" ? (speed / 8) : speed;
+  // Convert speed to megabytes per second
+  let speedInMBps = speedUnit === "Mbps" ? (speed / 8) : speed;
 
-      // Calculate download time in seconds
-      let timeInSeconds = sizeInMB / speedInMBps;
+  // Calculate download time in seconds
+  let timeInSeconds = sizeInMB / speedInMBps;
 
-      let minutes = Math.floor(timeInSeconds / 60);
-      let seconds = Math.round(timeInSeconds % 60);
+  let hours = Math.floor(timeInSeconds / 3600);
+  let minutes = Math.floor((timeInSeconds % 3600) / 60);
+  let seconds = Math.round(timeInSeconds % 60);
 
-      // Show the results
-      document.getElementById("output").innerText =
-        `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}\n` +
-        `to transfer ${size} ${sizeUnit} at ${speedInMBps.toFixed(2)} MB/sec`;
-      
-   document.getElementById("algeria-note").style.display = "block";
-    } 
+  // Show the results
+  let resultText = `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
+  
+  if (hours > 0) {
+    resultText = `${hours} hour${hours !== 1 ? 's' : ''} ${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}`;
+  }
+
+  document.getElementById("output").innerText =
+    `It will take ${resultText} to transfer ${size} ${sizeUnit} at ${speedInMBps.toFixed(2)} MB/sec`;
+
+  document.getElementById("algeria-note").style.display = "block";
+}
+
   </script>
 
 </body>
