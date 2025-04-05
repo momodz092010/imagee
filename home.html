@@ -81,8 +81,8 @@
 </head>
 <body>
 
+  <!-- Links Section -->
   <a class="speedtest-link" href="https://www.speedtest.net/" target="_blank">Test my internet speed</a>
-
   <a class="insta" href="https://www.instagram.com/iithemo" target="_blank">Contact me on Instagram</a>
 
   <div class="banner"> Downloading Speed Calc By : +M0 </div>
@@ -112,7 +112,8 @@
     <button onclick="calculate()">Calculate</button>
 
     <div id="output" class="result"></div>
-    <div id="note" class="note" style="display: none;">* This is just a simulation of how much time it would take. Note: We know that Algeria has a fast internet speed (; </div>
+    <div class="note">* This is just a simulation of how much time it would take</div>
+    <div id="note-algeria" class="note" style="display: none;">Note: We know that Algeria has a fast internet speed (; </div>
   </div>
 
   <script>
@@ -144,8 +145,8 @@
         `${minutes} minute${minutes !== 1 ? 's' : ''} ${seconds} second${seconds !== 1 ? 's' : ''}\n` +
         `to transfer ${size} ${sizeUnit} at ${speedInMBps.toFixed(2)} MB/sec`;
 
-      // Show the note after results
-      document.getElementById("note").style.display = "block";
+      // Show the Algeria note after results
+      document.getElementById("note-algeria").style.display = "block";
     }
   </script>
 
